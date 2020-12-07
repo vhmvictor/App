@@ -69,7 +69,7 @@ app.post("/customers/create", async (req, res, next) => {
       },
       data: customer
     });
-    console.log(create_customer);
+    console.log(create_customer.data);
     return res.status(200).send('Ok');
   } catch(error) {
     return res.status(500).send('Erro ao criar a lead.');
@@ -77,8 +77,67 @@ app.post("/customers/create", async (req, res, next) => {
 })
 //
 app.post("/checkouts/create", async (req, res, next) => {
+  try {
     console.log(req.body);
+    //
+    let checkout;
+    checkout = {
+      "event_type": "CONVERSION",
+      "event_family":"CDP",
+      "payload": {
+        "conversion_identifier": "Carrinho-Abandonado",
+        "name": req.body.customer.first_name + " " + req.body.customer.last_name,
+        "email": req.body.email,
+        "job_title": "",
+        "state": req.body.customer.default_address.province,
+        "city": req.body.customer.default_address.city,
+        "country": req.body.customer.default_address.country,
+        "personal_phone": req.body.customer.default_address.phone,
+        "mobile_phone": req.body.customer.phone,
+        "cf_orders_count": JSON.stringify(default_addressq.body.customer.orders_count),
+        "cf_total_spent": req.body.customer.total_spent,
+        "cf_checkout_url": req.body.abandoned_checkout_url, 
+        "twitter": "",
+        "facebook": "",
+        "linkedin": "",
+        "website": "",
+        "company_name": "",
+        "company_site": "",
+        "company_address": "",
+        "client_tracking_id": "",
+        "traffic_source": req.body.referring_site,
+        "traffic_medium": "",
+        "traffic_campaign": "",
+        "traffic_value": "",
+        "tags": ["carrinho-abandonado"],
+        "available_for_mailing": true,
+      }
+    }
+    console.log(checkout);
+    // 
+    let authentication = await axios({ method: 'POST', url: process.env.RD_AUTH_URL,
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "client_id": process.env.RD_CLIENT_ID,
+        "client_secret": process.env.RD_CLIENT_SECRET,
+        "refresh_token": process.env.RD_REFLESH_TOKEN
+      }
+    });
+    //
+    let create_checkout = await axios({ method: 'POST', url: process.env.RD_LEAD_URL,
+      headers: {
+        "Authorization": "Bearer " + authentication.data.access_token,
+        "Content-Type": "application/json"
+      },
+      data: checkout
+    });
+    console.log(create_customer.data);
     return res.status(200).send('Ok');
+  } catch(error) {
+    return res.status(500).send('Erro ao criar a lead.');
+  }
 });
 //
 app.post("/orders/create", async (req, res, next) => {
