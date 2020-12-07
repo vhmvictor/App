@@ -10,7 +10,7 @@ app.use(cors());
 
 //TESTE DO SERVIDOR
 app.get("/hello", (request, response) => {
-    response.json({ message: 'Hello Anna Prata' })
+    response.json({ message: 'Hello, Anna Prata!' })
 });
 //
 app.post("/customers/create", async (req, res, next) => {
