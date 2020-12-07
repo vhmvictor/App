@@ -14,8 +14,65 @@ app.get("/hello", (request, response) => {
 });
 //
 app.post("/customers/create", async (req, res, next) => {
+  try {
     console.log(req.body);
+    //
+    let customer;
+    customer = {
+      "event_type": "CONVERSION",
+      "event_family":"CDP",
+      "payload": {
+        "conversion_identifier": "Novo-Cadastro",
+        "name": req.body.first_name + " " + req.body.last_name,
+        "email": req.body.email,
+        "job_title": "",
+        "state": "",
+        "city": "",
+        "country": "",
+        "personal_phone": "",
+        "mobile_phone": req.body.phone,
+        "cf_orders_count": req.body.orders_count,
+        "cf_total_spent": req.body.total_spent,
+        "twitter": "",
+        "facebook": "",
+        "linkedin": "",
+        "website": "",
+        "company_name": "",
+        "company_site": "",
+        "company_address": "",
+        "client_tracking_id": "",
+        "traffic_source": "",
+        "traffic_medium": "",
+        "traffic_campaign": "",
+        "traffic_value": "",
+        "tags": [""],
+        "available_for_mailing": true,
+      }
+    }
+    console.log(customer);
+    // 
+    let authentication = await axios({ method: 'POST', url: process.env.RD_AUTH_URL,
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "client_id": process.env.RD_CLIENT_ID,
+        "client_secret": process.env.RD_CLIENT_SECRET,
+        "refresh_token": process.env.RD_REFLESH_TOKEN
+      }
+    });
+    //
+    let create_customer = await axios({ method: 'POST', url: process.env.RD_LEAD_URL,
+      headers: {
+        "Authorization": "Bearer " + authentication.data.access_token,
+        "Content-Type": "application/json"
+      },
+      data: customer
+    });
     return res.status(200).send('Ok');
+  } catch(error) {
+    return res.status(500).send('Erro ao criar a lead.');
+  }
 })
 //
 app.post("/checkouts/create", async (req, res, next) => {
