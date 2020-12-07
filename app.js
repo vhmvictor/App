@@ -133,7 +133,7 @@ app.post("/checkouts/create", async (req, res, next) => {
       },
       data: checkout
     });
-    console.log(create_customer.data);
+    console.log(create_checkout.data);
     return res.status(200).send('Ok');
   } catch(error) {
     return res.status(500).send('Erro ao criar a lead.');
