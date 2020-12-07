@@ -15,16 +15,17 @@ app.get("/hello", (request, response) => {
 //
 app.post("/customers/create", async (req, res, next) => {
     console.log(req.body);
-    res.send(req.body);
+    return res.status(200).send('Ok');
 })
 //
-app.post("checkouts/create", async (req, res, next) => {
+app.post("/checkouts/create", async (req, res, next) => {
     console.log(req.body);
-    res.send(req.body);
+    return res.status(200).send('Ok');
 });
 //
-/*
-app.post("/order_created_hook", async (req, res, next) => {
+app.post("/orders/create", async (req, res, next) => {
+  console.log(req.body);
+  /*
   try {
     let order = [];
     let created_lead = [];
@@ -100,9 +101,13 @@ app.post("/order_created_hook", async (req, res, next) => {
   } catch (error) {
       return res.status(500).send('Erro ao criar a lead.');
   }
+  */
+ return res.status(200).send('Ok');
 })
 //
-app.post("/order_paid_hook", async (req, res, next) => {
+app.post("/orders/paid", async (req, res, next) => {
+  console.log(req.body);
+  /*
   try {
     nuvemshop.config({
       store_id: process.env.STORE_ID,
@@ -197,8 +202,9 @@ app.post("/order_paid_hook", async (req, res, next) => {
   } catch (error) {
       return res.status(500).send('Erro ao criar a lead.');
   }
+  */
+  return res.status(200).send('Ok');
 })
-*/
 //
 app.listen(process.env.PORT || 3000, () => {
     console.log("Servidor iniciado!");
