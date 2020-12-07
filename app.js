@@ -69,6 +69,7 @@ app.post("/customers/create", async (req, res, next) => {
       },
       data: customer
     });
+    console.log(create_customer);
     return res.status(200).send('Ok');
   } catch(error) {
     return res.status(500).send('Erro ao criar a lead.');
