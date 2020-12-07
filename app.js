@@ -31,7 +31,7 @@ app.post("/customers/create", async (req, res, next) => {
         "country": "",
         "personal_phone": "",
         "mobile_phone": req.body.phone,
-        "cf_orders_count": req.body.orders_count,
+        "cf_orders_count": JSON.stringify(req.body.orders_count),
         "cf_total_spent": req.body.total_spent,
         "twitter": "",
         "facebook": "",
