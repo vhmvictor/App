@@ -255,6 +255,7 @@ app.post("/orders/paid", async (req, res, next) => {
         "value": parseFloat(req.body.total_price)
       }
     };
+    console.log(sale);
     // 
     let authentication = await axios({ method: 'POST', url: process.env.RD_AUTH_URL,
       header: {
