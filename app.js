@@ -94,7 +94,7 @@ app.post("/checkouts/create", async (req, res, next) => {
         "country": req.body.customer.default_address.country,
         "personal_phone": req.body.customer.default_address.phone,
         "mobile_phone": req.body.customer.phone,
-        "cf_orders_count": JSON.stringify(default_addressq.body.customer.orders_count),
+        "cf_orders_count": JSON.stringify(req.body.customer.orders_count),
         "cf_total_spent": req.body.customer.total_spent,
         "cf_checkout_url": req.body.abandoned_checkout_url, 
         "twitter": "",
