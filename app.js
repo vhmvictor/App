@@ -174,7 +174,7 @@ app.post("/orders/create", async (req, res, next) => {
         "traffic_medium": "",
         "traffic_campaign": "",
         "traffic_value": "",
-        "tags": ["shopify", "anna-prata"],
+        "tags": ["shopify", "anna-prata", "pagamento-pendente"],
         "available_for_mailing": true,
       }
     }
